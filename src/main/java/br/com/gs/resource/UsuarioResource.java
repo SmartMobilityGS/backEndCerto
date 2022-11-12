@@ -30,6 +30,7 @@ public class UsuarioResource {
 	public UsuarioResource() {
 		try {
 			bo = new UsuarioBO(ConnectionFactory.getConnection());
+			dao = new UsuarioDAO(ConnectionFactory.getConnection());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -38,7 +39,7 @@ public class UsuarioResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<UsuarioTO> getAll() throws SQLException{
-		return dao.getAll();
+		return bo.getAll();
 	}
 	
 	 @GET

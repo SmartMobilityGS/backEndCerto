@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import br.com.gs.dao.UsuarioDAO;
+import br.com.gs.exceptions.IdNotFoundException;
 import br.com.gs.factory.ConnectionFactory;
 import br.com.gs.to.UsuarioTO;
 
@@ -21,9 +22,9 @@ public class UsuarioBO {
 
 	public void register(UsuarioTO usuario) throws SQLException {
 		conexao.setAutoCommit(false);
+		enderecoBo.register(usuario.getEnderecoTo());
 		usuarioDao.register(usuario);
 		usuario.getEnderecoTo().setUsuarioTo(usuario);
-		enderecoBo.register(usuario.getEnderecoTo());
 		conexao.commit();
 	}
 	
@@ -36,5 +37,18 @@ public class UsuarioBO {
 //		}
 //		return null;
 //	}
+	
+	public List<UsuarioTO> getAll() throws SQLException {
+		List<UsuarioTO> lista = usuarioDao.getAll(); 
+		//Percorrer a lista de produtora
+		for (UsuarioTO to : lista) {
+			try {
+				to.setEnderecoTo(enderecoBo.getByCodigoUsuario(to.getIdEndereco()));
+			} catch (IdNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		return lista;
+	}
 		
 }
