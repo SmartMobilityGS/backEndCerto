@@ -14,6 +14,7 @@ public class UsuarioTO {
 	private String email;
 	private String senha;
 	private String tipo;
+	private int idEndereco;
 	private EnderecoTO enderecoTo;
 	private PlanoTO planoTo;
 	
@@ -49,7 +50,22 @@ public class UsuarioTO {
 		this.tipo = tipo;
 	}
 	
+	
 
+	public UsuarioTO(int id, String nome, String sobrenome, String cpf, String cnh, String dataNascimento,
+			String telefone, String email, String senha, String tipo, int idEndereco) {
+		this.id = id;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.cpf = cpf;
+		this.cnh = cnh;
+		this.dataNascimento = dataNascimento;
+		this.telefone = telefone;
+		this.email = email;
+		this.senha = senha;
+		this.tipo = tipo;
+		this.idEndereco = idEndereco;
+	}
 
 	/**
 	 * @param id
@@ -247,6 +263,14 @@ public class UsuarioTO {
 	 */
 	public void setPlanoTo(PlanoTO planoTo) {
 		this.planoTo = planoTo;
+	}
+
+	public int getIdEndereco() {
+		return idEndereco;
+	}
+
+	public void setIdEndereco(int idEndereco) {
+		this.idEndereco = idEndereco;
 	}
 	
 	

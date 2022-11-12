@@ -20,7 +20,7 @@ public class UsuarioDAO {
 	public void register(UsuarioTO usuario) throws SQLException {
 		PreparedStatement stmt = conexao.prepareStatement(
 				"insert into t_charchan_usuario values "
-				+ "(sq_t_charchan_usuario.nextval, ?,?,?,?,to_date(?,'dd/mm/yyyy'),?,?,?,?)",
+				+ "(sq_t_charchan_usuario.nextval, ?,?,?,?,to_date(?,'dd/mm/yyyy'),?,?,?,?,?)",
 				new String[] {"id_usuario"});
 		
 		stmt.setString(1, usuario.getNome());
@@ -32,6 +32,7 @@ public class UsuarioDAO {
 		stmt.setString(7, usuario.getEmail());
 		stmt.setString(8, usuario.getSenha());
 		stmt.setString(9, usuario.getTipo());
+		stmt.setInt(10, usuario.getEnderecoTo().getId());
 
 		
 		stmt.executeUpdate();
@@ -79,7 +80,7 @@ public class UsuarioDAO {
 	
 	private UsuarioTO parse(ResultSet resultSet) throws SQLException {
 		int id = resultSet.getInt("id_usuario");
-		String nome = resultSet.getString("nm_nome");
+		String nome = resultSet.getString("nm_usuario");
 		String sobrenome = resultSet.getString("ds_sobrenome");
 		String cpf = resultSet.getString("nr_cpf");
 		String cnh = resultSet.getString("nr_cnh");
@@ -88,8 +89,9 @@ public class UsuarioDAO {
 		String email = resultSet.getString("ds_email");
 		String senha = resultSet.getString("ds_senha");
 		String tipo = resultSet.getString("ds_tipo");
+		int idEndereco = resultSet.getInt("t_charchan_endereco_id_endereco");
 		
-		UsuarioTO usuario = new UsuarioTO(id, nome, sobrenome, cpf, cnh, dtNascimento, telefone, email, senha, tipo);
+		UsuarioTO usuario = new UsuarioTO(id, nome, sobrenome, cpf, cnh, dtNascimento, telefone, email, senha, tipo, idEndereco);
 		return usuario;
 	}
 	
